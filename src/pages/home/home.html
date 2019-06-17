@@ -6,9 +6,15 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
+<ion-content padding *ngIf="questionsData" style="text-align: center">
+  <p style="font-size: 20px;height: 60px;font-weight: bold; margin-top: 40px">{{questionsData.results[questionIndex].question}}</p>
+      
+  <br>
+  <!-- true/false radio buttons -->
+  <ion-list radio-group [(ngModel)]="rgValue">
+<ion-item *ngFor="let choice of choices" >
+<ion-radio value="{{choice}" color="secondary" mode="md"></ion-radio>
+    <ion-label>{{choice}}</ion-label>
+  </ion-item>
+  </ion-list>
 </ion-content>
