@@ -11,9 +11,9 @@
       
   <br>
   <!-- true/false radio buttons -->
-  <ion-list radio-group [(ngModel)]="rgValue">
+<ion-list radio-group [(ngModel)]="rgValue">
 <ion-item *ngFor="let choice of choices" >
-<ion-radio value="{{choice}" color="secondary" mode="md"></ion-radio>
+<ion-radio value="{{choice}}" color="secondary" mode="md"></ion-radio>
     <ion-label>{{choice}}</ion-label>
   </ion-item>
   </ion-list>
