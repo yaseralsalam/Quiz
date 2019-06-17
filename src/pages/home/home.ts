@@ -1,3 +1,4 @@
+import { ResultPage } from './../result/result';
 import { Component } from '@angular/core';
 import { NavController, ToastController, LoadingController } from 'ionic-angular';
 import { QuestionProvider } from '../../providers/question/question';
@@ -8,7 +9,7 @@ import { QuestionProvider } from '../../providers/question/question';
 })
 export class HomePage {
   questionsData:any;
-  questionCount:number = 10;
+  questionCount:number = 2;
   questionIndex=0;
   correctAnswers:number = 0;
   wrongAnswers:number = 0;
@@ -158,9 +159,7 @@ getChoices()
         
         else
         {
-          
-          
-          
+          this.navCtrl.push(ResultPage, {"questionCount": this.questionCount, "correctAnswers":this.correctAnswers, "wrongAnswers":this.wrongAnswers});
         }
       }
       
