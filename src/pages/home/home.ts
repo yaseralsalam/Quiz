@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, ToastController } from 'ionic-angular';
+import { NavController, ToastController, LoadingController } from 'ionic-angular';
 import { QuestionProvider } from '../../providers/question/question';
 
 @Component({
@@ -10,9 +10,13 @@ export class HomePage {
   questionsData:any;
   questionCount:number = 10;
   questionIndex=0;
+  correctAnswers:number = 0;
+  wrongAnswers:number = 0;
+  message;
   rgValue;
   choices=[];
-  constructor(public navCtrl: NavController, private questionProvider:QuestionProvider, private toastCtrl:ToastController) {
+  duration = 1000;
+  constructor(public navCtrl: NavController, private questionProvider:QuestionProvider, private toastCtrl:ToastController, private loadingCtrl:LoadingController) {
 this.loadQuestions();
   }
 
@@ -71,7 +75,7 @@ this.loadQuestions();
    return str;
   }
 
-  getChoices()
+getChoices()
 {
   for(let i =0;i<3;i++)
   {
@@ -82,6 +86,90 @@ this.loadQuestions();
   this.questionsData.results[this.questionIndex].correct_answer= this.replaceChar(this.questionsData.results[this.questionIndex].correct_answer);
   this.choices[3] = this.questionsData.results[this.questionIndex].correct_answer;
   console.log(this.choices);
+  this.choices = this.shuffle(this.choices);
+
+  }
+
+  shuffle(array) {
+    var currentIndex = array.length, temporaryValue, randomIndex;
   
-}
+    // While there remain elements to shuffle...
+    while (0 !== currentIndex) {
+  
+      // Pick a remaining element...
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex -= 1;
+  
+      // And swap it with the current element.
+      temporaryValue = array[currentIndex];
+      array[currentIndex] = array[randomIndex];
+      array[randomIndex] = temporaryValue;
+    }
+  
+    return array;
+  }
+
+  async onClick()
+  {
+    this.duration=1000;
+    console.log("rgValue="+this.rgValue);
+
+    
+   
+    console.log(this.questionIndex);
+    
+    if(this.rgValue != null)
+    {
+    if(this.questionsData.results[this.questionIndex].correct_answer == this.rgValue)
+     { 
+       this.correctAnswers++;
+       this.message="Correct Answer!";
+     }
+    else
+    {
+      this.wrongAnswers++;
+      this.message="Wrong Answer!<br>Correct Answer is: "+this.questionsData.results[this.questionIndex].correct_answer;
+      this.duration=2500;
+    }
+
+  }
+  else
+  {
+    this.message="Please choose an answer!";
+  }
+    let loading = await this.loadingCtrl.create({
+      spinner: 'hide',
+      content: this.message
+    });
+  
+    loading.present();
+    await loading.onDidDismiss(data => {
+     
+      if(this.rgValue!=null)
+      {
+        this.rgValue=null;
+        if(this.questionIndex+1 <= this.questionCount-1)
+        {
+          this.questionIndex++;
+          this.questionsData.results[this.questionIndex].question = this.replaceChar(this.questionsData.results[this.questionIndex].question);
+          this.getChoices();
+        }
+        
+        
+        else
+        {
+          
+          
+          
+        }
+      }
+      
+    });
+    setTimeout(() => {
+      loading.dismiss();
+    }, this.duration);
+
+
+  }
+
 }
