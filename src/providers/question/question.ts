@@ -9,9 +9,11 @@ import { Injectable } from '@angular/core';
 */
 @Injectable()
 export class QuestionProvider {
+
+  /*API from opentdb to get 10 multiple choice questions in computer category*/
   apiUrl="https://opentdb.com/api.php?category=18&type=multiple";
   constructor(public http: HttpClient) {
-    //console.log('Hello QuestionProvider Provider');
+    
   }
 getQuestions()
 {
