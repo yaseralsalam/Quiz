@@ -14,13 +14,15 @@ import { NavController, NavParams } from 'ionic-angular';
   templateUrl: 'result.html',
 })
 export class ResultPage {
-  questionCount;
-  correctAnswers;
-  wrongAnswers;
+  questionCount; //number of questions
+  correctAnswers; //correct answers counter
+  wrongAnswers;// wrong answers counter
   grade;
   percent;
-  color = "secondary";
+  color = "secondary"; //color og the navbar
+
   constructor(public navCtrl: NavController, public navParams: NavParams) {
+    //gtting the parameters
     this.questionCount = navParams.get("questionCount");
     this.correctAnswers = navParams.get("correctAnswers");
     this.wrongAnswers = navParams.get("wrongAnswers");
@@ -31,6 +33,7 @@ export class ResultPage {
     console.log('ionViewDidLoad ResultPage');
   }
 
+  //this function calculates the percentage and the grade based on correct answers and question counts
   getPercent()
   {
     this.percent = (this.correctAnswers/this.questionCount)*100;
@@ -49,6 +52,7 @@ export class ResultPage {
     }
   }
 
+  //return to the home page to start a new quiz
   onClick()
   {
     this.navCtrl.push(HomePage);
