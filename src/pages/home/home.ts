@@ -8,32 +8,33 @@ import { QuestionProvider } from '../../providers/question/question';
   templateUrl: 'home.html'
 })
 export class HomePage {
-  questionsData:any;
+  questionsData:any; //holds data from provider
   questionCount:number = 10;
   questionIndex=0;
-  correctAnswers:number = 0;
-  wrongAnswers:number = 0;
+  correctAnswers:number = 0; //counter of correct answers
+  wrongAnswers:number = 0; //counter of wrong answers
   message;
-  rgValue;
-  choices=[];
+  rgValue; // answer chosen by the user
+  choices=[]; //answer's choices
   duration = 1000;
+
   constructor(public navCtrl: NavController, private questionProvider:QuestionProvider, private toastCtrl:ToastController, private loadingCtrl:LoadingController) {
 this.loadQuestions();
   }
 
+  //this function loads data from the provider and it executes only one time at constructor
   loadQuestions()
   {
     this.questionProvider.getQuestions().subscribe(
       data=>{
         
       this.questionsData = data;
-      console.log(this.questionsData);
-      console.log(this.questionsData.results[0].question);
+      
+      //prepare the first question
       this.questionsData.results[0].question = this.replaceChar(this.questionsData.results[0].question);
-      console.log("question replaced");
+     
       this.getChoices();
-      console.log(Math.floor(Math.random()*4)+1);
-      console.log(this.questionsData.results.length);
+     
       if(this.questionsData.results.length==0)
       {
         
@@ -66,6 +67,7 @@ this.loadQuestions();
     });
   }
 
+  //this function replaces special characters
   replaceChar(str:string)
   {
     while(str.indexOf("&#039;")!=-1)
@@ -76,6 +78,7 @@ this.loadQuestions();
    return str;
   }
 
+//this function prepares the choices for the question and randomize it 
 getChoices()
 {
   for(let i =0;i<3;i++)
@@ -91,6 +94,7 @@ getChoices()
 
   }
 
+  //this function randomize the array of answers
   shuffle(array) {
     var currentIndex = array.length, temporaryValue, randomIndex;
   
@@ -110,6 +114,12 @@ getChoices()
     return array;
   }
 
+  /*this function does the following:
+  1. checks the answer if it is correct or not
+  2. counts the number of correct/wrong answers
+  3. shows the appropriate message
+  4. transfer to the result page if the quiz completed
+  */
   async onClick()
   {
     this.duration=1000;

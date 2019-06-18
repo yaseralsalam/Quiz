@@ -9,6 +9,7 @@
 <ion-content padding *ngIf="questionsData" style="text-align: center">
   <div style="margin-top: 60px;">
     
+    <!-- counters for question order number, correct answers, and wrong answers -->
     <ion-chip outline color="primary">
       <ion-icon name="help-circle" color="primary"></ion-icon>
       <ion-label>{{questionIndex+1}} of {{questionCount}}</ion-label>
@@ -25,10 +26,11 @@
     </ion-chip>
   </div>
   
+  <!-- the question -->
   <p style="font-size: 20px;height: 60px;font-weight: bold; margin-top: 40px">{{questionsData.results[questionIndex].question}}</p>
       
   <br>
-  <!-- true/false radio buttons -->
+  <!-- choices for the question as radio buttons -->
 <ion-list radio-group [(ngModel)]="rgValue">
 <ion-item *ngFor="let choice of choices" >
   <ion-label>{{choice}}</ion-label>
@@ -36,5 +38,7 @@
 
 </ion-item>
 </ion-list>
+
+<!-- button to check the answer and transfer to the result page -->
 <button id="btnNext" name="btnNext" style="margin-top: 25px" ion-button color="light" (click)="onClick()">Next &nbsp;<ion-icon name="ios-arrow-forward"></ion-icon></button>
 </ion-content>

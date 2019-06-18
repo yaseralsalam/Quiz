@@ -2,6 +2,9 @@ page-home {
 
 }
 
+
+/*remove the top and bottom border of the ion list*/
+
 .list-ios > .item-block:first-child {
     border-top: none;
 }
