@@ -10,6 +10,14 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-
+<ion-content padding style="text-align: center">
+  <ion-label>
+    <h1>{{grade}}</h1></ion-label>
+  <h1>
+    Your Score is {{correctAnswers}}/{{questionCount}}
+  </h1>
+    <h1>
+      Your percentage is {{percent}} %
+    </h1>
+    <button style="margin-top: 25px" ion-button (click)="onClick()">New Quiz !</button>
 </ion-content>

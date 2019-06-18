@@ -9,7 +9,7 @@ import { QuestionProvider } from '../../providers/question/question';
 })
 export class HomePage {
   questionsData:any;
-  questionCount:number = 2;
+  questionCount:number = 10;
   questionIndex=0;
   correctAnswers:number = 0;
   wrongAnswers:number = 0;
